@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Estoque</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Estoque Manager</h1>
+        <div class="user-info">
+            <div class="user-name">
+                Bem-vindo, <strong id="username">Usuario</strong>
+            </div>
+            <button class="logout-btn" onclick="logout()">Sair</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-grid">
+            <!-- Formulario de Adicao -->
+            <div class="card">
+                <h2>+ Adicionar Produto</h2>
+                <div id="formMessage" class="message"></div>
+
+                <form id="addItemForm">
+                    <div class="form-group">
+                        <label for="itemName">Nome do Produto</label>
+                        <input type="text" id="itemName" placeholder="Ex: Notebook Dell" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemType">Tipo</label>
+                        <input type="text" id="itemType" placeholder="Ex: Eletronicos" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemQuantity">Quantidade</label>
+                        <input type="number" id="itemQuantity" placeholder="0" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemValue">Valor Unitario (R$)</label>
+                        <input type="number" id="itemValue" placeholder="0.00" min="0" step="0.01" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Adicionar Produto</button>
+                </form>
+            </div>
+
+            <!-- Resumo do Estoque -->
+            <div class="card">
+                <h2>Resumo do Estoque</h2>
+                <div class="summary">
+                    <div class="summary-label">Total de Produtos</div>
+                    <div class="summary-value" id="totalItems">0</div>
+                </div>
+                <div class="summary">
+                    <div class="summary-label">Valor Total (R$)</div>
+                    <div class="summary-value" id="totalValue">R$ 0,00</div>
+                </div>
+            </div>
+
+            <!-- Tabela de Produtos -->
+            <div class="card table-container">
+                <h2>Produtos em Estoque</h2>
+                <div id="itemsContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">[ ]</div>
+                        <p>Nenhum produto adicionado ainda</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edicao -->
+    <div id="editModal">
+        <div class="modal-content">
+            <h2>Editar Produto</h2>
+            <form id="editForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group">
+                    <label for="editItemName">Nome</label>
+                    <input type="text" id="editItemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editItemType">Tipo</label>
+                    <input type="text" id="editItemType" required>
+                </div>
+                <div class="form-group">
+                    <label for="editItemQuantity">Quantidade</label>
+                    <input type="number" id="editItemQuantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="editItemValue">Valor Unitario (R$)</label>
+                    <input type="number" id="editItemValue" min="0" step="0.01" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">Salvar</button>
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
